@@ -1,0 +1,11 @@
+# Ignore cache directorys
+.gradle
+.idea
+
+# Ignore output directorys
+build
+out
+logs
+
+# Ignore YAML files
+*.yaml

@@ -1,0 +1,18 @@
+serviceConfig:
+  scheme: http://
+  hostName: 127.0.0.1
+  port: 12345
+  path: /api/example
+
+loggerConfig:
+  outputDir: ./logs/
+  outputFile: example.log
+
+databaseConfig:
+  dbUsername:
+  dbPassword:
+  dbHostname: localhost
+  dbPort: 3306
+  dbDriver: com.mysql.cj.jdbc.Driver
+  dbName: example
+  dbSettings: ?autoReconnect=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST
