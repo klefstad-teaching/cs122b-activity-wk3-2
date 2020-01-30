@@ -24,14 +24,14 @@ public class NewPage
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUsers(String jsonStream)
+    public Response getUsers(String jsonString)
     {
         // New Model Mapping
 
         UserNewResponseModel responseModel = new UserNewResponseModel();
 
         UserRequestModel requestModel =
-                Util.modelMapper(jsonStream, UserRequestModel.class, responseModel);
+                Util.modelMapper(jsonString, UserRequestModel.class, responseModel);
 
         if (requestModel == null)
             return responseModel.buildResponse();
@@ -42,19 +42,17 @@ public class NewPage
         // New Query Handler
 
         String query =  "\n" +
-                "SELECT CONCAT( '[', \n" +
-	            "     GROUP_CONCAT( \n" +
-                "        JSON_OBJECT( \n" +
+                "SELECT JSON_ARRAYAGG(JSON_OBJECT( \n" +
                 "         'userName', userName, \n" +
                 "         'level', level, \n" +
                 "         'status', status, \n" +
-                "         'logIns', logIns)" +
-                "     ), ']') as UserData \n" +
+                "         'logIns', logIns" +
+                "   )) as UserData \n" +
                 "FROM users \n" +
                 "WHERE level > ? \n" +
                 "     AND status > ? \n" +
                 "     AND logIns > ? \n" +
-                "    AND userName LIKE ?; ";
+                "     AND userName LIKE ?; ";
 
         Param[] params = new Param[]{
             Param.create(Types.INTEGER, requestModel.getLevel()),
