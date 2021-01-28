@@ -4,14 +4,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserRequestModel
 {
-    @JsonProperty("userName")
+    @JsonProperty("email")
     private String userName;
-    @JsonProperty("level")
+    @JsonProperty("plevel")
     private int level;
     @JsonProperty("status")
     private int status;
-    @JsonProperty("logIns")
-    private int logIns;
 
     public UserRequestModel()
     {
@@ -47,13 +45,4 @@ public class UserRequestModel
         this.status = status;
     }
 
-    public int getLogIns()
-    {
-        return logIns;
-    }
-
-    public void setLogIns(int logIns)
-    {
-        this.logIns = logIns;
-    }
 }

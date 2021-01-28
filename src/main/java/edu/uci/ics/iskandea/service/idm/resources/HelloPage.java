@@ -9,20 +9,28 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("hello")
+@Path("hello") // {config}/hello
 public class HelloPage
 {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response postHello()
+    public Response getHello()
     {
         return Response.status(Response.Status.OK)
                 .entity(new Message("GET: api/idm/hello")).build();
     }
 
+    @GET
+    @Produces(MediaType.APPLICATION_XML)
+    public Response getHello2()
+    {
+        return Response.status(Response.Status.OK)
+                .entity("<?xml version=\"1.0\" encoding=\"UTF-8\"?><element>GET: api/idm/hello</element>").build();
+    }
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getHello()
+    public Response postHello()
     {
         return Response.status(Response.Status.OK)
                 .entity(new Message("POST: api/idm/hello")).build();

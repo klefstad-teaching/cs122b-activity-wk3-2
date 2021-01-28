@@ -36,28 +36,21 @@ public class NewPage
         if (requestModel == null)
             return responseModel.buildResponse();
 
-
-
-
         // New Query Handler
-
         String query =  "\n" +
                 "SELECT JSON_ARRAYAGG(JSON_OBJECT( \n" +
-                "         'userName', userName, \n" +
-                "         'level', level, \n" +
-                "         'status', status, \n" +
-                "         'logIns', logIns" +
+                "         'email', email, \n" +
+                "         'plevel', plevel, \n" +
+                "         'status', status \n" +
                 "   )) as UserData \n" +
-                "FROM users \n" +
-                "WHERE level > ? \n" +
+                "FROM user \n" +
+                "WHERE plevel > ? \n" +
                 "     AND status > ? \n" +
-                "     AND logIns > ? \n" +
-                "     AND userName LIKE ?; ";
+                "     AND email LIKE ?; ";
 
         Param[] params = new Param[]{
             Param.create(Types.INTEGER, requestModel.getLevel()),
             Param.create(Types.INTEGER, requestModel.getStatus()),
-            Param.create(Types.INTEGER, requestModel.getLogIns()),
             Param.create(Types.VARCHAR, '%' + requestModel.getUserName() + '%')};
 
         try {

@@ -64,12 +64,11 @@ public class NormalPage
 
         ServiceLogger.LOGGER.info("Creating SQL Query");
         String query = "\n" +
-                "SELECT userName, level, status, logIns \n" +
-                "FROM users \n" +
-                "WHERE level > ? \n" +
+                "SELECT email, plevel, status \n" +
+                "FROM user \n" +
+                "WHERE plevel > ? \n" +
                 "    AND status > ? \n" +
-                "    AND logIns > ? \n" +
-                "    AND userName LIKE ?;";
+                "    AND email LIKE ?;";
 
         try {
             Connection con = IdmService.getCon();
@@ -77,8 +76,7 @@ public class NormalPage
 
             ps.setInt(1, requestModel.getLevel());
             ps.setInt(2, requestModel.getStatus());
-            ps.setInt(3, requestModel.getLevel());
-            ps.setString(4, '%' + requestModel.getUserName() + '%');
+            ps.setString(3, '%' + requestModel.getUserName() + '%');
 
             ServiceLogger.LOGGER.info("SQL Query: " + ps.toString());
 
@@ -88,10 +86,9 @@ public class NormalPage
 
             while (rs.next()) {
                 UserData userData = new UserData();
-                    userData.setUserName(rs.getString("userName"));
-                    userData.setLevel(rs.getInt("level"));
-                    userData.setStatus(rs.getInt("status"));
-                    userData.setLogIns(rs.getInt("logIns"));
+                userData.setUserName(rs.getString("email"));
+                userData.setLevel(rs.getInt("plevel"));
+                userData.setStatus(rs.getInt("status"));
 
                 list.add(userData);
             }
